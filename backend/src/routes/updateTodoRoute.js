@@ -9,4 +9,4 @@ const updateTodoRoute = async (req, res) => {
   res.json(updatedTodo);
 };
 
-export { updateTodoRoute };
+export default updateTodoRoute;

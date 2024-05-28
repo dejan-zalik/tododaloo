@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { X, Pencil } from 'lucide-react';
 import { useMutation, useQueryClient } from 'react-query';
 import updateTodoRequest from '../api/updateTodoRequest';
 import deleteTodoRequest from '../api/deleteTodoRequest';
-import { debounce } from 'lodash';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -45,18 +44,6 @@ const TodoItem = ({ todo }) => {
     },
   });
 
-  const debouncedUpdateTodo = useCallback(debounce(updateTodo, 600), [
-    updateTodo,
-  ]);
-
-  // useEffect(() => {
-  //   if (text != todo.text) {
-  //     debouncedUpdateTodo({ ...todo, text });
-  //   }
-  // }, [text]);
-
-  // const handleSubmit = () => {};
-
   return (
     <>
       <li>
@@ -89,23 +76,28 @@ const TodoItem = ({ todo }) => {
                 <button
                   onClick={() => setIsOpen(false)}
                   className="btn btn-ghost btn-circle"
+                  type="button"
                 >
                   <X />
                 </button>
               </div>
-              <form onSubmit={() => debouncedUpdateTodo({ ...todo, text })}>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!text) return;
+                  updateTodo({ ...todo, text: text });
+                  setIsOpen(false);
+                }}
+              >
                 <div className="flex p-3">
                   <input
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     type="text"
-                    placeholder="add todo"
+                    placeholder="update todo"
                     className="input input-bordered mr-1 w-3/4"
                   />
-                  <button
-                    className="btn ml-1 w-1/4"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <button className="btn ml-1 w-1/4" type="submit">
                     update
                   </button>
                 </div>

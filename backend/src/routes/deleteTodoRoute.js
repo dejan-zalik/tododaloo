@@ -7,4 +7,4 @@ const deleteTodoRoute = async (req, res) => {
   res.status(200).json(todo);
 };
 
-export { deleteTodoRoute };
+export default deleteTodoRoute;

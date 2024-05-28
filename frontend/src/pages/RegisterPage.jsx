@@ -3,12 +3,16 @@ import { UserRound, Mail, KeyRound } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { useMutation, useQueryClient } from 'react-query';
+import registerUserRequest from '../api/registerUserRequest';
 
 const RegisterPage = () => {
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setconfirmPassword] = useState('');
+
+  const queryClient = useQueryClient();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,10 +20,18 @@ const RegisterPage = () => {
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
     } else {
+      registerUser({ name, email, password });
       toast.success('register successful');
-      console.log(username);
+      setName('');
+      setEmail('');
+      setPassword('');
+      setconfirmPassword('');
     }
   };
+
+  const { mutate: registerUser } = useMutation((newUser) =>
+    registerUserRequest(newUser)
+  );
 
   return (
     <form onSubmit={handleSubmit}>
@@ -30,8 +42,8 @@ const RegisterPage = () => {
             type="text"
             className="grow"
             placeholder="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </label>
       </div>

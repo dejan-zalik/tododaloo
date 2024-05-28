@@ -5,4 +5,4 @@ const readTodoRoute = async (req, res) => {
   res.json(todos);
 };
 
-export { readTodoRoute };
+export default readTodoRoute;
