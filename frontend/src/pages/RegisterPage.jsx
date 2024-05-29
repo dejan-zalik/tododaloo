@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { UserRound, Mail, KeyRound } from 'lucide-react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import registerUserRequest from '../api/registerUserRequest';
 
 const RegisterPage = () => {
@@ -12,7 +11,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setconfirmPassword] = useState('');
 
-  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,10 +21,7 @@ const RegisterPage = () => {
     } else {
       registerUser({ name, email, password });
       toast.success('register successful');
-      setName('');
-      setEmail('');
-      setPassword('');
-      setconfirmPassword('');
+      navigate('/');
     }
   };
 

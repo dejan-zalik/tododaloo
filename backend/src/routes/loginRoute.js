@@ -1,17 +1,21 @@
-import jwt from 'jsonwebtoken';
+import UserModel from '../models/userModel.js';
+import asyncHandler from 'express-async-handler';
 
-const loginUser = (req, res) => {
-  if (req.body.password === process.env.PASSWORD) {
-    const token = jwt.sign(
-      {
-        userId: 1,
-      },
-      process.env.SECRET
-    );
-    res.json({ token });
+const loginRoute = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await UserModel.findOne({ email });
+
+  if (user && (await user.matchPassword(password))) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    });
   } else {
-    res.status(401).send('wrong password');
+    res.status(401);
+    throw new Error('Invalid email or password');
   }
-};
+});
 
-export default loginUser;
+export default loginRoute;

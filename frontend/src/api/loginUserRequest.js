@@ -1,14 +1,13 @@
 import { API_URL, token } from './config';
 
-const registerUserRequest = async (user) => {
-  const response = await fetch(`${API_URL}/registerpage`, {
+const loginUserRequest = async (user) => {
+  const response = await fetch(`${API_URL}/loginpage`, {
     method: 'POST',
     headers: {
-      // Authorization: `Bearer ${token}`,
+      //   Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      name: user.name,
       email: user.email,
       password: user.password,
     }),
@@ -16,4 +15,4 @@ const registerUserRequest = async (user) => {
   return await response.json();
 };
 
-export default registerUserRequest;
+export default loginUserRequest;

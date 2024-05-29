@@ -1,11 +1,8 @@
 import UserModel from '../models/userModel.js';
+import asyncHandler from 'express-async-handler';
 
-const registerRoute = async (req, res) => {
+const registerRoute = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-
-  //   console.log(name, email, password);
-
-  //   res.json('worked');
 
   const userExists = await UserModel.findOne({ email });
 
@@ -21,6 +18,6 @@ const registerRoute = async (req, res) => {
 
   const newUser = await user.save();
   res.json(newUser);
-};
+});
 
 export default registerRoute;

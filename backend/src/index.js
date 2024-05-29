@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import router from './router.js';
 import mongoose from 'mongoose';
+import errorHandler from './middleware/errorMiddleware.js';
 dotenv.config();
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json()); //allows processing json requests
 app.use(cors()); //allows apis that have different domains to be called
 app.use(morgan('tiny')); //helps with debugging, e.g. gives additional info from requests
 app.use(router);
+app.use(errorHandler);
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
   console.log('starting on port 8080');
