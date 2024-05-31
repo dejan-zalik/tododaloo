@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Mail, KeyRound } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import loginUserRequest from '../api/loginUserRequest';
-import { useMutation } from 'react-query';
 import { toast } from 'react-hot-toast';
 
 const LoginPage = () => {
@@ -11,19 +10,22 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !password) return;
-    try {
-      loginUser({ email, password });
-      toast.success('register successful');
-      navigate('/');
-    } catch (error) {
-      toast.error(error.error);
+
+    if (!email || !password) {
+      toast.error('please enter both email and password');
+      // return;
+    } else {
+      try {
+        await loginUserRequest({ email, password });
+        toast.success('login successful');
+        navigate('/');
+      } catch (error) {
+        toast.error(error.message);
+      }
     }
   };
-
-  const { mutate: loginUser } = useMutation((user) => loginUserRequest(user));
 
   return (
     <>
@@ -32,7 +34,7 @@ const LoginPage = () => {
           <label className="input input-bordered flex items-center gap-2">
             <Mail size={20} />
             <input
-              type="text"
+              type="email"
               className="grow"
               placeholder="email"
               value={email}

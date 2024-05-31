@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { UserRound, Mail, KeyRound } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import { useMutation } from 'react-query';
 import registerUserRequest from '../api/registerUserRequest';
 
 const RegisterPage = () => {
@@ -13,21 +12,21 @@ const RegisterPage = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
     } else {
-      registerUser({ name, email, password });
-      toast.success('register successful');
-      navigate('/');
+      try {
+        await registerUserRequest({ name, email, password });
+        toast.success('register successful');
+        navigate('/');
+      } catch (error) {
+        toast.error(error.message);
+      }
     }
   };
-
-  const { mutate: registerUser } = useMutation((newUser) =>
-    registerUserRequest(newUser)
-  );
 
   return (
     <form onSubmit={handleSubmit}>
@@ -47,7 +46,7 @@ const RegisterPage = () => {
         <label className="input input-bordered flex items-center gap-2">
           <Mail size={20} />
           <input
-            type="text"
+            type="email"
             className="grow"
             placeholder="email"
             value={email}

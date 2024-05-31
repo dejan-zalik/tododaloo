@@ -13,7 +13,13 @@ const registerUserRequest = async (user) => {
       password: user.password,
     }),
   });
-  return await response.json();
+  if (response.ok) {
+    response.json();
+  } else {
+    await response.json().then((data) => {
+      throw new Error(data.message);
+    });
+  }
 };
 
 export default registerUserRequest;

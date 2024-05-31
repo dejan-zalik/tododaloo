@@ -7,17 +7,26 @@ const registerRoute = asyncHandler(async (req, res) => {
   const userExists = await UserModel.findOne({ email });
 
   if (userExists) {
-    console.log('user exists');
+    res.status(400);
+    throw new Error('User already exists');
   }
 
-  const user = new UserModel({
+  const user = await UserModel.create({
     name,
     email,
     password,
   });
 
-  const newUser = await user.save();
-  res.json(newUser);
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    });
+  } else {
+    res.status(400);
+    throw new Error('Invalid user data');
+  }
 });
 
 export default registerRoute;
