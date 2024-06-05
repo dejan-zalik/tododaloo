@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Mail, KeyRound } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import loginUserRequest from '../api/loginUserRequest';
 import { toast } from 'react-hot-toast';
+import { AuthContext } from '../context/Contexts';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [currentUser, setCurrentUser] = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -18,7 +20,9 @@ const LoginPage = () => {
       // return;
     } else {
       try {
-        await loginUserRequest({ email, password });
+        await loginUserRequest({ email, password }).then((data) => {
+          setCurrentUser(data._id);
+        });
         toast.success('login successful');
         navigate('/');
       } catch (error) {

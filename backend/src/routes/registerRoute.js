@@ -1,5 +1,6 @@
 import UserModel from '../models/userModel.js';
 import asyncHandler from 'express-async-handler';
+import generateToken from '../utils/generateToken.js';
 
 const registerRoute = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -18,6 +19,7 @@ const registerRoute = asyncHandler(async (req, res) => {
   });
 
   if (user) {
+    generateToken(res, user._id);
     res.status(201).json({
       _id: user._id,
       name: user.name,

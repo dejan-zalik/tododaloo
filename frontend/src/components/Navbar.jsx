@@ -1,8 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Home, AlignJustify } from 'lucide-react';
+import { useContext } from 'react';
+import { AuthContext } from '../context/Contexts';
 
 const Navbar = () => {
+  const [currentUser, setCurrentUser] = useContext(AuthContext);
   return (
     <div className="container pb-12">
       <div className="navbar bg-base-100">
@@ -13,6 +16,7 @@ const Navbar = () => {
             </div>
           </NavLink>
         </div>
+        <div>{currentUser}</div>
         <div className="flex-none">
           <div className="dropdown dropdown-left">
             <div
@@ -26,15 +30,24 @@ const Navbar = () => {
               tabIndex={0}
               className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li>
-                <NavLink to="/">Todos</NavLink>
-              </li>
-              <li>
-                <NavLink to="/loginpage">Login</NavLink>
-              </li>
-              <li>
-                <NavLink to="/registerpage">Register</NavLink>
-              </li>
+              {currentUser ? (
+                <>
+                  {' '}
+                  <li>
+                    <NavLink to="/">Todos</NavLink>
+                  </li>{' '}
+                </>
+              ) : (
+                <>
+                  {' '}
+                  <li>
+                    <NavLink to="/loginpage">Login</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/registerpage">Register</NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

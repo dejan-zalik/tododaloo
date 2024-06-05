@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useState } from 'react';
 import createTodoRequest from '../api/createTodoRequest';
+import { AuthContext } from '../context/Contexts';
 
 const AddTodoForm = () => {
   const [text, setText] = useState('');
+  const [currentUser, setCurrentUser] = useContext(AuthContext);
   const queryClient = useQueryClient();
 
   const { mutate: addTodo } = useMutation(
@@ -21,7 +23,7 @@ const AddTodoForm = () => {
       onSubmit={(e) => {
         e.preventDefault();
         if (!text) return;
-        addTodo({ text });
+        addTodo({ text: text, userId: currentUser });
         setText('');
       }}
       className="px-2 max-w-md mx-auto"

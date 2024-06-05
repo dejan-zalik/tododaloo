@@ -1,11 +1,11 @@
 import express from 'express';
 import loginRoute from './routes/loginRoute.js';
 import readTodoRoute from './routes/readTodoRoute.js';
-import { isLoggedIn } from './middleware/isLoggedIn.js';
 import createTodoRoute from './routes/createTodoRoute.js';
 import updateTodoRoute from './routes/updateTodoRoute.js';
 import deleteTodoRoute from './routes/deleteTodoRoute.js';
 import registerRoute from './routes/registerRoute.js';
+import logoutRoute from './routes/logoutRoute.js';
 
 const router = express.Router();
 
@@ -14,10 +14,11 @@ const router = express.Router();
 // users
 router.post('/registerpage', registerRoute);
 router.post('/loginpage', loginRoute);
+router.post('/logout', logoutRoute);
 // todos
-router.post('/todos', isLoggedIn, createTodoRoute);
-router.get('/todos', isLoggedIn, readTodoRoute);
-router.put('/todos/:id', isLoggedIn, updateTodoRoute);
-router.delete('/todos/:id', isLoggedIn, deleteTodoRoute);
+router.post('/todos', createTodoRoute);
+router.get('/todos', readTodoRoute);
+router.put('/todos/:id', updateTodoRoute);
+router.delete('/todos/:id', deleteTodoRoute);
 
 export default router;

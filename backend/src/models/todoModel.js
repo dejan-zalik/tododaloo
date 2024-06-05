@@ -7,6 +7,9 @@ const todoSchema = new mongoose.Schema({
   completed: {
     type: Boolean,
   },
+  userId: {
+    type: String,
+  },
 });
 
 const TodoModel = mongoose.model('Todo', todoSchema);

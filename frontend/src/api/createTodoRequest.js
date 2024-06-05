@@ -10,6 +10,7 @@ const createTodoRequest = async (todo) => {
     body: JSON.stringify({
       text: todo.text,
       completed: false,
+      userId: todo.userId,
     }),
   });
   return await response.json();

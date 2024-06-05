@@ -13,7 +13,8 @@ const loginUserRequest = async (user) => {
     }),
   });
   if (response.ok) {
-    response.json();
+    const data = await response.json();
+    return data;
   } else {
     await response.json().then((data) => {
       throw new Error(data.message);
