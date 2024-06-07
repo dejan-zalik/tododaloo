@@ -1,20 +1,20 @@
-import { API_URL, token } from './config';
+import { API_URL } from './config';
 
 const loginUserRequest = async (user) => {
   const response = await fetch(`${API_URL}/loginpage`, {
     method: 'POST',
     headers: {
-      //   Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       email: user.email,
       password: user.password,
     }),
+    credentials: 'include',
+    mode: 'same-origin',
   });
   if (response.ok) {
-    const data = await response.json();
-    return data;
+    return await response.json();
   } else {
     await response.json().then((data) => {
       throw new Error(data.message);

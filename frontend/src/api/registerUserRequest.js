@@ -1,10 +1,9 @@
-import { API_URL, token } from './config';
+import { API_URL } from './config';
 
 const registerUserRequest = async (user) => {
   const response = await fetch(`${API_URL}/registerpage`, {
     method: 'POST',
     headers: {
-      // Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -14,7 +13,7 @@ const registerUserRequest = async (user) => {
     }),
   });
   if (response.ok) {
-    response.json();
+    return await response.json();
   } else {
     await response.json().then((data) => {
       throw new Error(data.message);

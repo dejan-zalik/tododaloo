@@ -1,10 +1,9 @@
-import { API_URL, token } from './config';
+import { API_URL } from './config';
 
 const createTodoRequest = async (todo) => {
   const response = await fetch(`${API_URL}/todos`, {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({

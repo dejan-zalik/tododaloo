@@ -3,9 +3,21 @@ import { NavLink } from 'react-router-dom';
 import { Home, AlignJustify } from 'lucide-react';
 import { useContext } from 'react';
 import { AuthContext } from '../context/Contexts';
+import logoutUserRequest from '../api/logoutUserRequest';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const logoutHandler = async (e) => {
+    e.preventDefault();
+    await logoutUserRequest();
+    setCurrentUser(null);
+    // navigate('/loginpage');
+  };
+
   return (
     <div className="container pb-12">
       <div className="navbar bg-base-100">
@@ -32,14 +44,17 @@ const Navbar = () => {
             >
               {currentUser ? (
                 <>
-                  {' '}
                   <li>
                     <NavLink to="/">Todos</NavLink>
-                  </li>{' '}
+                  </li>
+                  <li>
+                    <NavLink to="/loginpage" onClick={logoutHandler}>
+                      Log out
+                    </NavLink>
+                  </li>
                 </>
               ) : (
                 <>
-                  {' '}
                   <li>
                     <NavLink to="/loginpage">Login</NavLink>
                   </li>
