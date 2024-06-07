@@ -11,7 +11,6 @@ const loginUserRequest = async (user) => {
       password: user.password,
     }),
     credentials: 'include',
-    mode: 'same-origin',
   });
   if (response.ok) {
     return await response.json();
