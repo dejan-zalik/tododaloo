@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { UserRound, Mail, KeyRound } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
 import registerUserRequest from '../api/registerUserRequest';
+import { toast } from 'react-hot-toast';
+import { AuthContext } from '../context/Contexts';
 
 const RegisterPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setconfirmPassword] = useState('');
+  const [currentUser, setCurrentUser] = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -19,7 +21,11 @@ const RegisterPage = () => {
       toast.error('Passwords do not match');
     } else {
       try {
-        await registerUserRequest({ name, email, password });
+        await registerUserRequest({ name, email, password }).then((data) => {
+          localStorage.setItem('userInfo', JSON.stringify(data));
+          const user = JSON.parse(localStorage.getItem('userInfo'));
+          setCurrentUser(user._id);
+        });
         toast.success('register successful');
         navigate('/');
       } catch (error) {

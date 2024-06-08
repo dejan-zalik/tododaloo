@@ -18,12 +18,12 @@ router.post('/loginpage', loginRoute);
 router.post('/logout', logoutRoute);
 // todos
 // router.post('/todos', protect, createTodoRoute);
-// router.get('/todos', protect, readTodoRoute);
+router.get('/todos', protect, readTodoRoute);
 // router.put('/todos/:id', protect, updateTodoRoute);
 // router.delete('/todos/:id', protect, deleteTodoRoute);
 
 router.post('/todos', createTodoRoute);
-router.get('/todos', readTodoRoute);
+// router.get('/todos', readTodoRoute);
 router.put('/todos/:id', updateTodoRoute);
 router.delete('/todos/:id', deleteTodoRoute);
 

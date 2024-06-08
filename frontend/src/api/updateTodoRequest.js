@@ -10,6 +10,7 @@ const updateTodoRequest = async (todo) => {
       text: todo.text,
       completed: todo.completed,
     }),
+    credentials: 'include',
   });
   return await response.json();
 };

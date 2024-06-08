@@ -19,10 +19,10 @@ app.use(
     credentials: true,
   })
 ); //allows apis that have different domains to be called
+app.use(cookieParser());
 app.use(morgan('tiny')); //helps with debugging, e.g. gives additional info from requests
 app.use(router);
 app.use(errorHandler);
-app.use(cookieParser());
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
   console.log('starting on port 8080');

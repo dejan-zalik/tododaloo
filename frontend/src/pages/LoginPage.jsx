@@ -17,11 +17,12 @@ const LoginPage = () => {
 
     if (!email || !password) {
       toast.error('please enter both email and password');
-      // return;
     } else {
       try {
         await loginUserRequest({ email, password }).then((data) => {
-          setCurrentUser(data._id);
+          localStorage.setItem('userInfo', JSON.stringify(data));
+          const user = JSON.parse(localStorage.getItem('userInfo'));
+          setCurrentUser(user._id);
         });
         toast.success('login successful');
         navigate('/');

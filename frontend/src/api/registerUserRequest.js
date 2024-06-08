@@ -11,6 +11,7 @@ const registerUserRequest = async (user) => {
       email: user.email,
       password: user.password,
     }),
+    credentials: 'include',
   });
   if (response.ok) {
     return await response.json();

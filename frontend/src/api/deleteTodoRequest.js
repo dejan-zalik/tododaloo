@@ -6,6 +6,7 @@ const deleteTodoRequest = async (todo) => {
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
   });
   return await response.json();
 };

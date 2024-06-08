@@ -11,6 +11,7 @@ const createTodoRequest = async (todo) => {
       completed: false,
       userId: todo.userId,
     }),
+    credentials: 'include',
   });
   return await response.json();
 };

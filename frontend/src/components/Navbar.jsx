@@ -4,18 +4,15 @@ import { Home, AlignJustify } from 'lucide-react';
 import { useContext } from 'react';
 import { AuthContext } from '../context/Contexts';
 import logoutUserRequest from '../api/logoutUserRequest';
-import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = useContext(AuthContext);
 
-  const navigate = useNavigate();
-
   const logoutHandler = async (e) => {
     e.preventDefault();
     await logoutUserRequest();
+    localStorage.clear();
     setCurrentUser(null);
-    // navigate('/loginpage');
   };
 
   return (
