@@ -15,7 +15,7 @@ app.use(express.json()); //allows processing json requests
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: '*',
+    origin: 'http://localhost:5173',
     credentials: true,
   })
 ); //allows apis that have different domains to be called

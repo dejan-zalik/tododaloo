@@ -6,6 +6,7 @@ const readTodosRequest = async () => {
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include'
   });
   return await response.json();
 };
