@@ -25,7 +25,7 @@ const Navbar = () => {
             </div>
           </NavLink>
         </div>
-        <div>{currentUser}</div>
+        {/* <div>{currentUser}</div> */}
         <div className="flex-none">
           <div className="dropdown dropdown-left">
             <div
@@ -41,9 +41,9 @@ const Navbar = () => {
             >
               {currentUser ? (
                 <>
-                  <li>
+                  {/* <li>
                     <NavLink to="/">Todos</NavLink>
-                  </li>
+                  </li> */}
                   <li>
                     <NavLink to="/loginpage" onClick={logoutHandler}>
                       Log out
