@@ -10,12 +10,10 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   useEffect(() => {
     if (localStorage.getItem('userInfo')) {
-      console.log('if');
       const user = JSON.parse(localStorage.getItem('userInfo'));
       setCurrentUser(user._id);
       navigate('/');
     } else {
-      console.log('else');
       navigate('/loginpage');
     }
   }, []);
